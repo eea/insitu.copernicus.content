@@ -1,0 +1,462 @@
+<span tal:define="
+  lastUpload_value python:context.getField('lastUpload').getAccessor(context)();
+  geographicCoverage_value python:context.getField('geographicCoverage').getAccessor(context)();
+  geographicAccuracy_value python:context.getField('geographicAccuracy').getAccessor(context)();
+  tags_value python:context.getField('subject').getAccessor(context)();
+  rights_value python:context.getField('rights').getAccessor(context)();
+  coordinateRS_value python:context.getField('coordinateReferenceSystem').getAccessor(context)();
+  dataSources_value python:context.getField('dataSources').getAccessor(context)();
+  owners_value python:context.getField('owners').getAccessor(context)();
+  dataCustodians_value python:context.getField('dataCustodians').getAccessor(context)();
+  descriptionDM_value python:context.getField('descriptionDetailedMetadata').getAccessor(context)();
+  accessAUC_value python:context.getField('accessAndUseConstraints').getAccessor(context)();
+
+  has_metadata_details python:geographicAccuracy_value or tags_value or rights_value or coordinateRS_value or dataSources_value or owners_value or dataCustodians_value or descriptionDM_value or accessAUC_value;
+
+  membership python:context.portal_membership;
+  user python:membership.getAuthenticatedMember();
+  roles python:user.getRoles();
+  user_is_admin python:'Site Administrator' in roles;
+  metadata_tab_visibility python:(getattr(context, 'metadata_tab_old_new_or_both', 'new'));
+  meta_old python:metadata_tab_visibility == 'old';
+  meta_both python:metadata_tab_visibility == 'both';
+  meta_new python:metadata_tab_visibility == 'new';
+  meta_new python:True if ((meta_old or meta_new or meta_both) is False) else meta_new;
+
+  show_old_meta python:False if (meta_new) else True;
+  show_new_meta python:True if ((meta_both and user_is_admin) or meta_new) else False;
+  "
+
+  tal:condition="python:has_metadata_details"><!-- Some repetition, but tooltips are working too. -->
+
+<!--
+metadata_tab_old_new_or_both is a string property editable in /manage_propertiesForm
+Possible values: old, new, both
+Any other value or missing property means: new
+=================================================================================================
+                                        admin          anonymous           < User type
+                                      OLD   NEW       OLD    NEW           < Metadata tab type
+metadata_tab_old_new_or_both value
+          >                  old      YES   NO        YES    NO
+                             both     YES   YES       YES    NO            < tabs visibility
+                             new      NO    YES       NO     YES
+=================================================================================================
+ -->
+
+<style>
+.detailed-metadata-container dl {
+  margin-bottom: 15px !important;
+}
+
+.detailed-metadata-container .section-title {
+  border-bottom: solid 1px #CCCCCC;
+  color: #333333;
+  font-size: 14px;
+  margin-bottom: 5px;
+  text-align: left;
+  padding-left: 26%;
+  margin-left: -2px;
+  text-transform: uppercase;
+}
+</style>
+
+  <!-- New metadata -->
+  <div class="detailed-metadata-container" tal:condition="show_new_meta">
+    <h4 class="section-title" i18n:translate="">Data identification</h4>
+    <dl>
+      <!-- Resource title -->
+      <tal:block
+        define="field python:context.getField('dataResourceTitle');
+        value python:field.getAccessor(context)()"
+        condition="value">
+        <dt style="clear: left">
+          <metal:basic use-macro="here/interface_elements_macros/macros/tooltip" />
+          <span i18n:translate="">Resource title:</span>
+        </dt>
+        <dd tal:content="structure value">Resource title</dd>
+      </tal:block>
+
+      <!-- Resource abstract -->
+      <tal:block
+        define="field python:context.getField('dataResourceAbstract');
+        value python:field.getAccessor(context)()"
+        condition="value">
+        <dt style="clear: left">
+          <metal:basic use-macro="here/interface_elements_macros/macros/tooltip" />
+          <span i18n:translate="">Resource abstract:</span>
+        </dt>
+        <dd tal:content="structure value">Resource abstract</dd>
+      </tal:block>
+
+      <!-- Resource type -->
+      <tal:block
+        define="field python:context.getField('dataResourceType');
+        value python:field.getAccessor(context)()"
+        condition="value">
+        <dt style="clear: left">
+          <metal:basic use-macro="here/interface_elements_macros/macros/tooltip" />
+          <span i18n:translate="">Resource type:</span>
+        </dt>
+        <dd tal:content="structure value">Resource type</dd>
+      </tal:block>
+
+      <!-- Resource Locator -->
+      <tal:block
+        define="field python:context.getField('dataResourceLocator');
+        value python:field.getAccessor(context)()"
+        condition="value">
+        <dt style="clear: left">
+          <metal:basic use-macro="here/interface_elements_macros/macros/tooltip" />
+          <span i18n:translate="">Resource Locator:</span>
+        </dt>
+        <dd>
+          <a tal:content="structure value" tal:attributes="href value">
+            Resource Locator
+          </a>
+        </dd>
+      </tal:block>
+    </dl>
+
+    <h4 class="section-title" i18n:translate="">Classification of spatial data</h4>
+    <dl>
+      <!-- Topic of category -->
+      <tal:block
+        define="field python:context.getField('classificationTopicCategory');
+        value python:field.getAccessor(context)()"
+        condition="value">
+        <dt style="clear: left">
+          <metal:basic use-macro="here/interface_elements_macros/macros/tooltip" />
+          <span i18n:translate="">Topic of category:</span>
+        </dt>
+        <dd>
+          <span tal:content="python: u', '.join(value)" />
+        </dd>
+      </tal:block>
+
+      <!-- Keyword (old Tags)-->
+      <tal:block
+        define="field python:context.getField('subject');
+        value python:field.getAccessor(context)()"
+        condition="value">
+        <dt style="clear: left">
+          <metal:basic use-macro="here/interface_elements_macros/macros/tooltip" />
+          <span i18n:translate="">Keyword:</span>
+        </dt>
+        <dd>
+          <a tal:repeat="tag value" href="" class="label-tag"
+             tal:attributes="href string: ${context/@@plone_context_state/object_url}/dataset_tag_search?tag=${tag}">
+             <span class="label-white-color" tal:content="tag"></span>
+          </a>
+        </dd>
+      </tal:block>
+    </dl>
+
+    <h4 class="section-title" i18n:translate="">Geographic reference</h4>
+    <dl>
+      <!-- Geographic Bounding Box -->
+      <tal:block define="field python:context.getField('geographicBoundingBox');
+                         value python:field.getAccessor(context)()" condition="python:len(value)>3">
+        <dt style="clear: left">
+          <metal:basic use-macro="here/interface_elements_macros/macros/tooltip" />
+          <span i18n:translate="">Bounding Box:</span>
+        </dt>
+        <dd>
+          <p i18n:translate="">West = <span tal:content="structure python:value[0] if len(value)>3 else None" i18n:name="west"></span></p>
+          <p i18n:translate="">East = <span tal:content="structure python:value[1] if len(value)>3 else None" i18n:name="east"></span></p>
+          <p i18n:translate="">North = <span tal:content="structure python:value[2] if len(value)>3 else None" i18n:name="north"></span></p>
+          <p i18n:translate="">South = <span tal:content="structure python:value[3] if len(value)>3 else None" i18n:name="south"></span></p>
+        </dd>
+      </tal:block>
+
+      <!-- Coverage -->
+      <tal:block
+        define="field python:context.getField('geographicCoverage');
+        value python:field.getAccessor(context)()"
+        condition="value">
+        <dt style="clear: left">
+          <metal:basic use-macro="here/interface_elements_macros/macros/tooltip" />
+          <span i18n:translate="">Coverage:</span>
+        </dt>
+        <dd >
+          <span tal:content="python: u', '.join(context.get_countries_coverage())" />
+        </dd>
+      </tal:block>
+
+      <!-- Coordinate Reference System -->
+      <tal:block
+        define="field python:context.getField('coordinateReferenceSystem');
+        value python:field.getAccessor(context)()"
+        condition="value">
+        <dt style="clear: left">
+          <metal:basic use-macro="here/interface_elements_macros/macros/tooltip" />
+          <span i18n:translate="">Coordinate Reference System:</span>
+        </dt>
+        <dd tal:content="structure value">Coordinate Reference System</dd>
+      </tal:block>
+    </dl>
+
+    <h4 class="section-title" i18n:translate="">Temporal reference</h4>
+    <dl>
+      <!-- Temporal Extent -->
+      <tal:temporalCoverage metal:use-macro="context/temporal_macros/macros/temporal-coverage-data" ></tal:temporalCoverage>
+
+      <!-- Date of publication -->
+      <tal:block
+        define="field python:context.getField('lastUpload');
+        value python:field.getAccessor(context)()"
+        condition="value">
+        <dt style="clear: left">
+          <metal:basic use-macro="here/interface_elements_macros/macros/tooltip" />
+          <span i18n:translate="">Date of publication:</span>
+        </dt>
+        <dd tal:content="python: context.toLocalizedTime(value, long_format=0)">Date of publication:</dd>
+      </tal:block>
+    </dl>
+
+    <h4 class="section-title" i18n:translate="">Quality and validity</h4>
+    <dl>
+      <!-- Lineage -->
+      <tal:block
+        define="field python:context.getField('qualityLineage');
+        value python:field.getAccessor(context)()"
+        condition="value">
+        <dt style="clear: left">
+          <metal:basic use-macro="here/interface_elements_macros/macros/tooltip" />
+          <span i18n:translate="">Lineage:</span>
+        </dt>
+        <dd tal:content="structure value">Lineage</dd>
+      </tal:block>
+
+      <!-- Spatial resolution -->
+      <tal:block
+        define="field python:context.getField('qualitySpatialResolution');
+        value python:field.getAccessor(context)()"
+        condition="value">
+        <dt style="clear: left">
+          <metal:basic use-macro="here/interface_elements_macros/macros/tooltip" />
+          <span i18n:translate="">Spatial resolution:</span>
+        </dt>
+        <dd tal:content="structure value">Spatial resolution</dd>
+      </tal:block>
+    </dl>
+
+    <h4 class="section-title" i18n:translate="">Conformity</h4>
+    <dl>
+      <!-- Specification -->
+      <tal:block
+        define="field python:context.getField('conformitySpecification');
+        value python:field.getAccessor(context)()"
+        condition="value">
+        <dt style="clear: left">
+          <metal:basic use-macro="here/interface_elements_macros/macros/tooltip" />
+          <span i18n:translate="">Specification:</span>
+        </dt>
+        <dd tal:content="structure value">Specification</dd>
+      </tal:block>
+
+      <!-- Degree -->
+      <tal:block
+        define="field python:context.getField('conformityDegree');
+        value python:field.getAccessor(context)()"
+        condition="value">
+        <dt style="clear: left">
+          <metal:basic use-macro="here/interface_elements_macros/macros/tooltip" />
+          <span i18n:translate="">Degree:</span>
+        </dt>
+        <dd tal:content="structure value">Degree</dd>
+      </tal:block>
+    </dl>
+
+    <h4 class="section-title" i18n:translate="">Constraints related to access and use</h4>
+    <dl>
+      <!-- Conditions applying to access and use -->
+      <tal:block
+        define="field python:context.getField('accessAndUseConstraints');
+        value python:field.getAccessor(context)()"
+        condition="value">
+        <dt style="clear: left">
+          <metal:basic use-macro="here/interface_elements_macros/macros/tooltip" />
+          <span i18n:translate="">Conditions applying to access and use:</span>
+        </dt>
+        <dd tal:content="structure value">Conditions applying to access and use</dd>
+      </tal:block>
+
+      <!-- Limitation of public access -->
+      <tal:block
+        define="field python:context.getField('accessAndUseLimitationPublic');
+        value python:field.getAccessor(context)()"
+        condition="value">
+        <dt style="clear: left">
+          <metal:basic use-macro="here/interface_elements_macros/macros/tooltip" />
+          <span i18n:translate="">Limitation of public access:</span>
+        </dt>
+        <dd tal:content="structure value">Limitation of public access</dd>
+      </tal:block>
+    </dl>
+
+    <h4 class="section-title" i18n:translate="">Responsible organisation</h4>
+    <dl>
+      <!-- Responsible party -->
+      <tal:block
+        define="field python:context.getField('owners');
+        value python:field.getAccessor(context)()"
+        condition="value">
+        <dt style="clear: left">
+          <metal:basic use-macro="here/interface_elements_macros/macros/tooltip" />
+          <span i18n:translate="">Responsible party:</span>
+        </dt>
+        <dd tal:content="structure value">Responsible party</dd>
+      </tal:block>
+
+      <!-- Responsible party role -->
+      <tal:block
+        define="field python:context.getField('responsiblePartyRole');
+        value python:field.getAccessor(context)()"
+        condition="value">
+        <dt style="clear: left">
+          <metal:basic use-macro="here/interface_elements_macros/macros/tooltip" />
+          <span i18n:translate="">Responsible party role:</span>
+        </dt>
+        <dd tal:content="structure value">Responsible party role</dd>
+      </tal:block>
+    </dl>
+  </div><!-- New metadata -->
+
+  <!-- Old metadata -->
+  <br />
+  <h3 tal:condition="python:user_is_admin and meta_both" i18n:translate="">Old metadata (will be removed):</h3>
+  <div class="detailed-metadata-container" tal:condition="show_old_meta">
+    <dl>
+      <!-- Temporal coverage: -->
+      <tal:temporalCoverage metal:use-macro="context/temporal_macros/macros/temporal-coverage-data" >
+      </tal:temporalCoverage>
+
+      <!-- Latest upload -->
+      <tal:block define="field python:context.getField('lastUpload');
+                         value python:field.getAccessor(context)()"
+                 condition="value">
+        <dt style="clear: left">
+          <metal:basic use-macro="here/interface_elements_macros/macros/tooltip" />
+          <span i18n:translate="">Latest upload:</span>
+        </dt>
+        <dd tal:content="python: context.toLocalizedTime(value, long_format=0)">Last upload</dd>
+      </tal:block>
+
+      <!-- Geographic coverage -->
+      <tal:block define="field python:context.getField('geographicCoverage');
+                         value python:field.getAccessor(context)()"
+                 condition="value">
+        <dt style="clear: left">
+          <metal:basic use-macro="here/interface_elements_macros/macros/tooltip" />
+          <span i18n:translate="">Geographic coverage:</span>
+        </dt>
+        <dd >
+            <span tal:content="python: u', '.join(context.get_countries_coverage())" />
+        </dd>
+      </tal:block>
+
+      <!-- Geographic accuracy -->
+      <tal:block define="field python:context.getField('geographicAccuracy');
+                         value python:field.getAccessor(context)()"
+                 condition="value">
+        <dt style="clear: left">
+          <metal:basic use-macro="here/interface_elements_macros/macros/tooltip" />
+          <span i18n:translate="">Geographic accuracy:</span>
+        </dt>
+        <dd tal:content="structure value">Geographic accuracy</dd>
+      </tal:block>
+
+      <!-- Tags -->
+      <tal:block define="field python:context.getField('subject');
+                         value python:field.getAccessor(context)()"
+                 condition="value">
+        <dt style="clear: left">
+          <metal:basic use-macro="here/interface_elements_macros/macros/tooltip" />
+          <span i18n:translate="">Tags:</span>
+        </dt>
+        <dd>
+          <a tal:repeat="tag value" href="" class="label-tag"
+             tal:attributes="href string: ${context/@@plone_context_state/object_url}/dataset_tag_search?tag=${tag}">
+             <span class="label-white-color" tal:content="tag"></span>
+          </a>
+        </dd>
+      </tal:block>
+
+      <!-- Rights -->
+      <tal:block define="field python:context.getField('rights');
+                         value python:field.getAccessor(context)()"
+                 condition="value">
+        <dt style="clear: left">
+          <metal:basic use-macro="here/interface_elements_macros/macros/tooltip" />
+          <span i18n:translate="">Rights:</span>
+        </dt>
+        <dd tal:content="structure value">Rights</dd>
+      </tal:block>
+
+      <!-- Coordinate Reference System -->
+      <tal:block define="field python:context.getField('coordinateReferenceSystem');
+                         value python:field.getAccessor(context)()"
+                 condition="value">
+        <dt style="clear: left">
+          <metal:basic use-macro="here/interface_elements_macros/macros/tooltip" />
+          <span i18n:translate="">Coordinate Reference System:</span>
+        </dt>
+        <dd tal:content="structure value">Coordinate Reference System</dd>
+      </tal:block>
+
+      <!-- Data sources -->
+      <tal:block define="field python:context.getField('dataSources');
+                         value python:field.getAccessor(context)()"
+                 condition="value">
+        <dt style="clear: left">
+          <metal:basic use-macro="here/interface_elements_macros/macros/tooltip" />
+          <span i18n:translate="">Data Sources:</span>
+        </dt>
+        <dd tal:content="structure value">Data sources</dd>
+      </tal:block>
+
+      <!-- owners -->
+      <tal:block define="field python:context.getField('owners');
+                         value python:field.getAccessor(context)()"
+                 condition="value">
+        <dt style="clear: left">
+          <metal:basic use-macro="here/interface_elements_macros/macros/tooltip" />
+          <span i18n:translate="">Owners:</span>
+        </dt>
+        <dd tal:content="structure value">Owners</dd>
+      </tal:block>
+
+      <!-- Data custodians -->
+      <tal:block define="field python:context.getField('dataCustodians');
+                         value python:field.getAccessor(context)()"
+                 condition="value">
+        <dt style="clear: left">
+          <metal:basic use-macro="here/interface_elements_macros/macros/tooltip" />
+          <span i18n:translate="">Data custodians:</span>
+        </dt>
+        <dd tal:content="structure value">Data custodians</dd>
+      </tal:block>
+
+      <!-- Description for detailed metadata -->
+      <tal:block define="field python:context.getField('descriptionDetailedMetadata');
+                         value python:field.getAccessor(context)()"
+                 condition="value">
+        <dt style="clear: left">
+          <metal:basic use-macro="here/interface_elements_macros/macros/tooltip" />
+          <span i18n:translate="">Description:</span>
+        </dt>
+        <dd tal:content="structure value">Description</dd>
+      </tal:block>
+    </dl>
+  </div><!-- Old metadata -->
+
+<!-- TODO: Remove with Old metadata when done -->
+<!-- Access and Use Constraints -->
+<tal:block define="field python:context.getField('accessAndUseConstraints');
+                   value python:field.getAccessor(context)()"
+           condition="python:value and show_old_meta">
+  <h3 id="access-and-use-title" i18n:translate="">Access and Use Constraints</h3>
+  <div tal:content="structure value">Access and Use Constraints</div>
+</tal:block>
+
+</span>

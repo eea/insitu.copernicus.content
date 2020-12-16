@@ -1,0 +1,154 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US"
+      lang="en-US"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="plone">
+
+<body>
+  <metal:description fill-slot="content-description" />
+
+  <metal:content-core fill-slot="content-core">
+    <metal:main_macro define-macro="content-core">
+
+<div id="search-app" class="container"
+     ng-app="searchApp" ng-controller="searchController as app">
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+      <script src="./angular.min.js"></script>
+      <script src="./angular-route.js"></script>
+      <script src="./dirPagination.js"></script>
+      <script src="./search-by-tags.js"></script>
+
+      <h1 class="search-page-title">{{app.set_page_title()}}</h1>
+      <h2 class="page-title">Filter by tags</h2>
+      <p id="results" tal:content="python:view.do_search().get('results')"></p>
+
+      <p class="found-results">
+        {{app.get_results().length}}
+        <ng-pluralize count="app.get_results().length"
+                      when="{'0': 'items',
+                             '1': 'item',
+                             'other': 'items'}">
+       </ng-pluralize> found.
+      </p>
+
+      <!-- SEARCH CRITERIA -->
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"
+             ng-repeat="tag in app.get_tags(1)">
+          <a href class="{{tag.btn_class}} {{app.is_pressed(tag.id)}}"
+             ng-click="app.toggle_tag(tag.id)">
+            <img ng-src="./{{tag.id}}-icon.png" alt="{{tag.title}}">
+            <br>
+            <span class="text text-uppercase">{{tag.title}}</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <!-- Insitu Tags -->
+          <div class="insitu-btn-tags-container search-filters">
+            <div id="insitu-tags-1">
+              <a href
+                 ng-repeat="tag in app.get_tags(2)"
+                 ng-click="app.toggle_tag(tag.id)"
+                 class="{{tag.btn_class}} {{app.is_pressed(tag.id)}}">
+                {{tag.title}}
+              </a>
+            </div>
+            <div id="insitu-tags-2">
+              <a href
+                 ng-repeat="tag in app.get_tags(3)"
+                 ng-click="app.toggle_tag(tag.id)"
+                 class="{{tag.btn_class}} {{app.is_pressed(tag.id)}}">
+                {{tag.title}}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEARCH RESULTS -->
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="row row-pagination-top"
+               ng-show="app.get_results().length > 0">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="pull-left pagination-controls pagination-controls-top">
+                <dir-pagination-controls></dir-pagination-controls>
+              </div>
+              <div class="pull-right pagination-items pagination-items-top">
+                <p>
+                  <tal:i i18n:translate="">Items per page:</tal:i>
+                  <button class="btn filter-btn btn-default {{app.is_active(8)}}"
+                          ng-click="app.set_items_per_page(8)">8</button>
+                  <button class="btn filter-btn btn-default {{app.is_active(25)}}"
+                          ng-click="app.set_items_per_page(25)">25</button>
+                  <button class="btn filter-btn btn-default {{app.is_active(50)}}"
+                          ng-click="app.set_items_per_page(50)">50</button>
+                  <button class="btn filter-btn btn-default {{app.is_active(100)}}"
+                          ng-click="app.set_items_per_page(100)">100</button>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="search-item"
+               dir-paginate="item in app.get_results() | itemsPerPage: app.items_per_page" current-page="app.current_page">
+                <div class="item">
+                  <h3>
+                    <a href="{{item.url}}" target="_blank">
+                      {{item.title}}
+                    </a>
+                  </h3>
+                  <p class="item-description">
+                    {{item.description | limitTo:403}}
+                    <a href="{{item.url}}" target="_blank">
+                      Read more
+                    </a>
+                  </p>
+                  <a href
+                     ng-repeat="tag in app.get_tags_info(item.tags)"
+                     ng-click="app.toggle_tag(tag.id)"
+                     class="{{tag.tag_class}} {{app.is_pressed(tag.id)}}">
+                    {{tag.title}}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row row-pagination-bottom"
+               ng-show="app.get_results().length > 0">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="pull-left pagination-controls pagination-controls-bottom">
+                <dir-pagination-controls></dir-pagination-controls>
+              </div>
+              <div class="pull-right pagination-items pagination-items-bottom">
+                <p>
+                  <tal:i i18n:translate="">Items per page:</tal:i>
+                  <button class="btn filter-btn btn-default {{app.is_active(8)}}"
+                          ng-click="app.set_items_per_page(8)">8</button>
+                  <button class="btn filter-btn btn-default {{app.is_active(25)}}"
+                          ng-click="app.set_items_per_page(25)">25</button>
+                  <button class="btn filter-btn btn-default {{app.is_active(50)}}"
+                          ng-click="app.set_items_per_page(50)">50</button>
+                  <button class="btn filter-btn btn-default {{app.is_active(100)}}"
+                          ng-click="app.set_items_per_page(100)">100</button>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+    </metal:main_macro>
+  </metal:content-core>
+</body>
+</html>
