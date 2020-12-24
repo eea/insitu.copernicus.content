@@ -9,9 +9,9 @@
 
   <genericsetup:registerProfile
     name="default"
-    title="land.copernicus.content: Land Copernicus Content-Types Package"
+    title="insitu.copernicus.content: InSitu Copernicus Content-Types Package"
     directory="profiles/default"
-    description="Extension profile for Land Copernicus Content-Types"
+    description="Extension profile for InSitu Copernicus Content-Types"
     provides="Products.GenericSetup.interfaces.EXTENSION"
     />
 
@@ -23,17 +23,17 @@
 
 <genericsetup:registerProfile
     name="upgrade_24"
-    title="Upgrade profile for Land Copernicus Content-Types 2.4"
+    title="Upgrade profile for InSitu Copernicus Content-Types 2.4"
     directory="profiles/upgrades/to_24"
     description="This profile contains configuration changes for 2.4"
     provides="Products.GenericSetup.interfaces.EXTENSION"
     />
 
   <genericsetup:importStep
-    name="land.copernicus.content-install-vocabularies"
-    title="land.copernicus.content Vocabularies"
-    description="Install Vocabularies for land.copernicus.content"
-    handler="land.copernicus.content.setuphandlers.installVocabularies"
+    name="insitu.copernicus.content-install-vocabularies"
+    title="insitu.copernicus.content Vocabularies"
+    description="Install Vocabularies for insitu.copernicus.content"
+    handler="insitu.copernicus.content.setuphandlers.installVocabularies"
     />
 
 </configure>

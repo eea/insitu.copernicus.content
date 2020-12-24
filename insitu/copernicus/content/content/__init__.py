@@ -1,10 +1,10 @@
 """ Custom content
 """
 from Products.ATContentTypes.content.base import registerATCT
-from land.copernicus.content.config import PACKAGE_NAME
-from land.copernicus.content.content import landfile
-from land.copernicus.content.content import landitem
-from land.copernicus.content.content import landsection
+from insitu.copernicus.content.config import PACKAGE_NAME
+from insitu.copernicus.content.content import landfile
+from insitu.copernicus.content.content import landitem
+from insitu.copernicus.content.content import landsection
 
 
 def register():

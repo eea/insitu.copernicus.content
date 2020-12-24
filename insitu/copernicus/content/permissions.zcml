@@ -3,9 +3,9 @@
   i18n_domain="eea">
 
   <permission
-    id="land.copernicus.content.add"
-    title="land.copernicus.content: Add presentation"
-    description="Add Land Content"
+    id="insitu.copernicus.content.add"
+    title="insitu.copernicus.content: Add presentation"
+    description="Add InSitu Content"
     />
 
 </configure>

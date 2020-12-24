@@ -1,9 +1,9 @@
-""" land.copernicus.content schema
+""" insitu.copernicus.content schema
 """
 from AccessControl import ClassSecurityInfo
 from DateTime import DateTime
 from eea.forms.browser.app.temporal_coverage import grouped_coverage
-from land.copernicus.content.content.vocabulary import COUNTRIES_DICTIONARY_ID
+from insitu.copernicus.content.content.vocabulary import COUNTRIES_DICTIONARY_ID
 from Products.Archetypes import atapi
 from Products.Archetypes.atapi import BooleanField
 from Products.Archetypes.atapi import BooleanWidget
@@ -21,10 +21,10 @@ from Products.Archetypes.atapi import TextField
 from Products.ATContentTypes.content.folder import ATFolder
 from Products.ATContentTypes.content.link import ATLink
 from Products.ATVocabularyManager.namedvocabulary import NamedVocabulary
-from land.copernicus.content.widgets.geographic_bounding_box import (
+from insitu.copernicus.content.widgets.geographic_bounding_box import (
     GeographicBoundingBoxWidget
 )
-from land.copernicus.content.fields.geographic_bounding_box import (
+from insitu.copernicus.content.fields.geographic_bounding_box import (
     GeographicBoundingBoxField
 )
 from Products.Archetypes.public import LabelWidget

@@ -11,7 +11,7 @@ from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 from zope.interface import implements
 from zope.browserpage import ViewPageTemplateFile
 from zope.formlib.boolwidgets import CheckBoxWidget
-from land.copernicus.content.config import EEAMessageFactory as _
+from insitu.copernicus.content.config import EEAMessageFactory as _
 import re
 
 professional_thematic_domain_options = SimpleVocabulary([
