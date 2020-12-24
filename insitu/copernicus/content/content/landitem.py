@@ -1,11 +1,11 @@
-""" Land content-types
+""" InSitu content-types
 """
 
 from Products.CMFCore.utils import getToolByName
 from Products.ATContentTypes.content.folder import ATFolder
-from land.copernicus.content.config import IFRAME_HEIGHT
-from land.copernicus.content.content import schema
-from land.copernicus.content.content.interfaces import ILandItem
+from insitu.copernicus.content.config import IFRAME_HEIGHT
+from insitu.copernicus.content.content import schema
+from insitu.copernicus.content.content.interfaces import ILandItem
 from lxml.html import fragments_fromstring, tostring
 from zope.interface import implements
 

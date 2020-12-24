@@ -1,6 +1,6 @@
-=============================
-Land Copernicus Content-Types
-=============================
+===============================
+InSitu Copernicus Content-Types
+===============================
 insitu-redesign branch contains Custom Content-Types for insitu.copernicus.eu
 
 Copyright and license
@@ -15,7 +15,7 @@ General Public License as published by the Free Software Foundation;
 either version 2 of the License, or (at your option) any later
 version.
 
-More details under land.copernicus.content/docs/License.txt
+More details under insitu.copernicus.content/docs/License.txt
 
 
 Funding and project management

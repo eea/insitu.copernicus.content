@@ -6,7 +6,7 @@ from archetypes.schemaextender.field import ExtensionField
 from archetypes.schemaextender.interfaces import IOrderableSchemaExtender
 from archetypes.schemaextender.interfaces import ISchemaExtender
 from archetypes.schemaextender.interfaces import ISchemaModifier
-from land.copernicus.content.config import EEAMessageFactory as _
+from insitu.copernicus.content.config import EEAMessageFactory as _
 
 
 class BooleanField(ExtensionField, atapi.BooleanField):

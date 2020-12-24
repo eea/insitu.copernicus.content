@@ -2,22 +2,22 @@
            i18n_domain="eea">
 
   <adapter
-    name="land.copernicus.content.fields"
-    for="land.copernicus.content.content.interfaces.ILandContent"
+    name="insitu.copernicus.content.fields"
+    for="insitu.copernicus.content.content.interfaces.ILandContent"
     factory=".subtypes.Extender" />
 
   <adapter
-    name="land.copernicus.content.itemfields"
-    for="land.copernicus.content.content.interfaces.ILandItem"
+    name="insitu.copernicus.content.itemfields"
+    for="insitu.copernicus.content.content.interfaces.ILandItem"
     factory=".subtypes.LandItemExtender" />
 
   <adapter
-    name="land.copernicus.content.newsitemfields"
+    name="insitu.copernicus.content.newsitemfields"
     for="Products.ATContentTypes.interfaces.news.IATNewsItem"
     factory=".subtypes.ATNewsItemExtender" />
 
   <adapter
-    name="land.copernicus.content.atblob"
+    name="insitu.copernicus.content.atblob"
     for="plone.app.blob.interfaces.IATBlob"
     factory=".subtypes.ATBlobModifier" />
 
@@ -30,8 +30,8 @@
     handler=".edit.handler" />
 
   <adapter
-    name="land.copernicus.content.landfile"
-    for="land.copernicus.content.content.interfaces.ILandFile"
+    name="insitu.copernicus.content.landfile"
+    for="insitu.copernicus.content.content.interfaces.ILandFile"
     factory=".landfile.SchemaExtender" />
 
 </configure>

@@ -1,9 +1,9 @@
-""" Land content-types
+""" InSitu content-types
 """
 from zope.interface import implements
 from Products.ATContentTypes.content.folder import ATFolder
-from land.copernicus.content.content.interfaces import ILandSection
-from land.copernicus.content.content import schema
+from insitu.copernicus.content.content.interfaces import ILandSection
+from insitu.copernicus.content.content import schema
 
 
 class LandSection(ATFolder):
