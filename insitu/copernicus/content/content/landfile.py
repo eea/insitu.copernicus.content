@@ -6,8 +6,8 @@ from Products.DataGridField import DataGridField
 from Products.DataGridField import DataGridWidget
 from archetypes.schemaextender.field import ExtensionField
 from archetypes.schemaextender.interfaces import ISchemaExtender
-from land.copernicus.content.content import schema
-from land.copernicus.content.content.interfaces import ILandFile
+from insitu.copernicus.content.content import schema
+from insitu.copernicus.content.content.interfaces import ILandFile
 from zope.interface import implements
 
 

@@ -1,7 +1,7 @@
 from App.Common import package_home
 from cgi import FieldStorage
 from cStringIO import StringIO
-from land.copernicus.content.config import product_globals
+from insitu.copernicus.content.config import product_globals
 from Products.Five import fiveconfigure
 from Products.Five import zcml
 from Products.PloneTestCase import PloneTestCase as ptc
@@ -17,15 +17,15 @@ def setup_copernicus_contenttypes():
     """
 
     fiveconfigure.debug_mode = True
-    import land.copernicus.content
-    zcml.load_config('configure.zcml', land.copernicus.content)
+    import insitu.copernicus.content
+    zcml.load_config('configure.zcml', insitu.copernicus.content)
     fiveconfigure.debug_mode = False
 
-    ptc.installPackage('land.copernicus.content')
+    ptc.installPackage('insitu.copernicus.content')
 
 
 setup_copernicus_contenttypes()
-ptc.setupPloneSite(products=['land.copernicus.content'])
+ptc.setupPloneSite(products=['insitu.copernicus.content'])
 
 
 class BaseCopernicusContentTestCase(ptc.PloneTestCase):
