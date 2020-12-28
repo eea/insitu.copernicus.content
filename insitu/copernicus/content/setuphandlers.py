@@ -1,19 +1,19 @@
 from Products.CMFCore.utils import getToolByName
 from Products.ATVocabularyManager.config import TOOL_NAME as ATVOCABULARYTOOL
 from Products.ATVocabularyManager.utils.vocabs import createHierarchicalVocabs
-from land.copernicus.content.content.vocabulary import COUNTRIES_DICTIONARY_ID
-from land.copernicus.content.content.vocabulary import getCountriesDictionary
+from insitu.copernicus.content.content.vocabulary import COUNTRIES_DICTIONARY_ID
+from insitu.copernicus.content.content.vocabulary import getCountriesDictionary
 import logging
 
 
-logger = logging.getLogger('land.copernicus.content: setuphandlers')
+logger = logging.getLogger('insitu.copernicus.content: setuphandlers')
 
 
 def installVocabularies(context):
     """ Creates/imports the atvm vocabs.
     """
     # only run this step if we are in eea.dataservice profile
-    if context.readDataFile('land.copernicus.content.txt') is None:
+    if context.readDataFile('insitu.copernicus.content.txt') is None:
         return
 
     site = context.getSite()

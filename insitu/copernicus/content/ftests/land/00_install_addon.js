@@ -35,13 +35,13 @@ casper.test.begin('Add-on Install', function(test) {
            test.assertExists("form#add-plone-site input[type=submit][value='Create a new Plone site']", "create new plone site");
    });
    /* submit form */
-   casper.waitForSelector("form input[value='land.copernicus.content:default']",
+   casper.waitForSelector("form input[value='insitu.copernicus.content:default']",
        function success() {
-           test.assertExists("form input[value='land.copernicus.content:default']", "land.copernicus.content check box is present");
-           this.click("form input[value='land.copernicus.content:default']");
+           test.assertExists("form input[value='insitu.copernicus.content:default']", "insitu.copernicus.content check box is present");
+           this.click("form input[value='insitu.copernicus.content:default']");
        },
        function fail() {
-           test.assertExists("form input[value='land.copernicus.content:default']", "land.copernicus.content check box is present");
+           test.assertExists("form input[value='insitu.copernicus.content:default']", "insitu.copernicus.content check box is present");
    });
    casper.waitForSelector("form input[type=submit][value='Create Plone Site']",
        function success() {

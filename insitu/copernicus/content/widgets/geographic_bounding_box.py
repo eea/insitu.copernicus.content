@@ -29,6 +29,6 @@ registerWidget(
     title='Geographic Bounding Box Widget',
     description='GeographicBoundingBoxWidget uses 4 inputs '
                 '(West, East, North, South)',
-    used_for=('land.copernicus.content.fields.'
+    used_for=('insitu.copernicus.content.fields.'
               'geographic_bounding_box.GeographicBoundingBoxWidget',)
 )
