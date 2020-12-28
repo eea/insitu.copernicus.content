@@ -39,14 +39,14 @@
     name="redirect-download-url"
     class=".views.RedirectDownloadUrl"
     permission="zope2.View"
-    for="insitu.copernicus.content.content.insitu.LandFile"
+    for="insitu.copernicus.content.content.landitem.LandFile"
     />
 
   <browser:page
     name="download-insitu-file"
     class=".views.DownloadLandFileView"
     permission="zope2.View"
-    for="insitu.copernicus.content.content.insitu.LandItem"
+    for="insitu.copernicus.content.content.landitem.LandItem"
     template="templates/download-insitu-file.pt"
     />
 
