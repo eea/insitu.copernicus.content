@@ -39,7 +39,7 @@
     name="redirect-download-url"
     class=".views.RedirectDownloadUrl"
     permission="zope2.View"
-    for="insitu.copernicus.content.content.landitem.LandFile"
+    for="insitu.copernicus.content.content.landfile.LandFile"
     />
 
   <browser:page
