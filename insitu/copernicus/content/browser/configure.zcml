@@ -43,11 +43,11 @@
     />
 
   <browser:page
-    name="download-insitu-file"
+    name="download-land-file"
     class=".views.DownloadLandFileView"
     permission="zope2.View"
     for="insitu.copernicus.content.content.landitem.LandItem"
-    template="templates/download-insitu-file.pt"
+    template="templates/download-land-file.pt"
     />
 
   <browser:page
