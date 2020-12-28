@@ -7,7 +7,7 @@
     i18n:translate="">A land file (file in a dataset)</property>
  <property name="icon_expr"></property>
  <property name="content_meta_type">LandFile</property>
- <property name="product">land.copernicus.content</property>
+ <property name="product">insitu.copernicus.content</property>
  <property name="factory">addLandFile</property>
  <property name="add_view_expr"></property>
  <property name="link_target"></property>

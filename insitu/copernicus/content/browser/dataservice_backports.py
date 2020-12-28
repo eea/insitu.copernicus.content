@@ -1,7 +1,7 @@
 from Products.ATVocabularyManager.config import TOOL_NAME as ATVOCABULARYTOOL
 from Products.CMFCore.utils import getToolByName
 from eea.cache import cache as eeacache
-from land.copernicus.content.content.vocabulary import COUNTRIES_DICTIONARY_ID
+from insitu.copernicus.content.content.vocabulary import COUNTRIES_DICTIONARY_ID
 from plone.i18n.locales.interfaces import ICountryAvailability
 from zope.component import getUtility
 import operator

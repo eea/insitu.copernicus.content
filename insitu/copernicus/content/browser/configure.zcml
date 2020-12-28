@@ -9,7 +9,7 @@
   <include file="patches.zcml" />
 
   <browser:resourceDirectory
-    name="land.copernicus.content.images"
+    name="insitu.copernicus.content.images"
     directory="./images" />
 
   <browser:page
@@ -39,15 +39,15 @@
     name="redirect-download-url"
     class=".views.RedirectDownloadUrl"
     permission="zope2.View"
-    for="land.copernicus.content.content.landfile.LandFile"
+    for="insitu.copernicus.content.content.insitu.LandFile"
     />
 
   <browser:page
-    name="download-land-file"
+    name="download-insitu-file"
     class=".views.DownloadLandFileView"
     permission="zope2.View"
-    for="land.copernicus.content.content.landitem.LandItem"
-    template="templates/download-land-file.pt"
+    for="insitu.copernicus.content.content.insitu.LandItem"
+    template="templates/download-insitu-file.pt"
     />
 
   <browser:page
@@ -73,7 +73,7 @@
 
   <browser:page
     name="view"
-    for="land.copernicus.content.content.interfaces.IInProximity"
+    for="insitu.copernicus.content.content.interfaces.IInProximity"
     class=".views.InProximityView"
     permission="zope2.View"
     />

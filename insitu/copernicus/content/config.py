@@ -8,13 +8,13 @@ product_globals = globals()
 
 # GENERAL package related settings ============================================
 
-PACKAGE_NAME = "land.copernicus.content"
+PACKAGE_NAME = "insitu.copernicus.content"
 PACKAGE_DESCRIPTION = "Custom Content-Types for Land Copernicus"
-PACKAGE_URL = "http://github.com/eea/land.copernicus.content"
+PACKAGE_URL = "http://github.com/eea/insitu.copernicus.content"
 
 # Security --------------------------------------------------------------------
 
-ADD_PERMISSION = "land.copernicus.content: Add presentation"
+ADD_PERMISSION = "insitu.copernicus.content: Add presentation"
 
 
 # Layout ----------------------------------------------------------------------

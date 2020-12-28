@@ -1,6 +1,6 @@
 import logging
 
-logger = logging.getLogger('land.copernicus.content')
+logger = logging.getLogger('insitu.copernicus.content')
 
 
 class FixImageScales(object):

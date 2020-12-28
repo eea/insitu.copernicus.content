@@ -4,7 +4,7 @@ from Products.Archetypes import atapi
 from Products.Archetypes.interfaces.field import IField
 from Products.Archetypes.Field import decode
 from Products.Archetypes.Field import encode
-from land.copernicus.content.widgets.geographic_bounding_box import (
+from insitu.copernicus.content.widgets.geographic_bounding_box import (
     GeographicBoundingBoxWidget
 )
 from Products.Archetypes import config
