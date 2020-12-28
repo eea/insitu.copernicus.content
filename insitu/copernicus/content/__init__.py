@@ -2,8 +2,8 @@
 """
 from Products.CMFCore import utils
 from Products.Archetypes import atapi
-from land.copernicus.content.config import PACKAGE_NAME, ADD_PERMISSION
-from land.copernicus.content import content
+from insitu.copernicus.content.config import PACKAGE_NAME, ADD_PERMISSION
+from insitu.copernicus.content import content
 
 
 def initialize(context):
