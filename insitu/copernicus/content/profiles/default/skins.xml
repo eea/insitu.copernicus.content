@@ -1,8 +1,0 @@
-<object name="portal_skins">
-  <object name="insitu_content_templates"
-    meta_type="Filesystem Directory View"
-    directory="insitu.copernicus.content:skins/insitu_content_templates"/>
-  <skin-path name="*">
-    <layer name="insitu_content_templates" insert-after="custom"/>
-  </skin-path>
-</object>
